@@ -4,8 +4,8 @@ import SessionsList from './components/SessionsList'
 function App() {
   return (
     <>
-    <header className="p-2 bg-gray-800">
-      <h1 className="text-white text-center text-2xl font-semibold">TS-Tracker</h1>
+    <header className="p-5 bg-gray-800">
+      <h1 className="text-white text-center text-5xl font-semibold">TS Tracker</h1>
     </header>
 
     <main className="p-2">

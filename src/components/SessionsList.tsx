@@ -2,7 +2,7 @@ import useSWR from "swr"
 import axios from "axios"
 import { Spinner } from "@material-tailwind/react"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 // Components
 import SessionEntry from "./SessionEntry";
@@ -24,7 +24,7 @@ export default function SessionsList() {
     const [productId, setProductId] = useState("666353")
     const apiKey = FetchAccessToken()
 
-    const sessionsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + startDate.toISOString()
+    const sessionsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + startDate.toISOString() + "&productId=" + productId
 
     const tsApiBody = {
         "dynamicLines": null,
@@ -42,7 +42,7 @@ export default function SessionsList() {
         axios.post(url, tsApiBody, { headers: tsApiHeaders })
         .then(response => response.data)
 
-    const { data, error, isLoading } = useSWR<SessionResponse>(() => apiKey ? sessionsUrl : false, fetcher)
+    const { data, isLoading } = useSWR<SessionResponse>(() => apiKey ? sessionsUrl : false, fetcher)
 
     const sessionEntries = data?.proposals.map((proposal, index) => (
         <SessionEntry
@@ -52,9 +52,8 @@ export default function SessionsList() {
             sessionFreeSpots={proposal.blocks[0].block.freeSpots}
             key={index}
         />
-    ));
+    ))
     const noResults = (sessionEntries?.length == 0) && !isLoading
-    
 
     return (
         <>
@@ -69,7 +68,7 @@ export default function SessionsList() {
 
 
 
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {sessionEntries}
         </div>
         </>
@@ -81,6 +80,6 @@ function FetchAccessToken() {
     const fetcher = (url: string) => 
         fetch(url)
         .then(response => response.json())
-    const { data, error } = useSWR<AccessTokenResponse>(accessTokenUrl, fetcher, { revalidateOnFocus: false} )
+    const { data } = useSWR<AccessTokenResponse>(accessTokenUrl, fetcher, { revalidateOnFocus: false} )
     return data?.AccessToken
 }
