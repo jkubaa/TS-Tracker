@@ -129,7 +129,7 @@ export default function SessionFilter(props: any) {
                 </div>
 
                 {!isGridFilterEnabled && <div className="w-72 px-2 mb-4 md:mb-0">
-                    <Select placeholder="" label="Select the session type" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="666353" onChange={(val) => props.setProductId(val)}>
+                    <Select placeholder="" label="Session" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="666353" onChange={(val) => props.setProductId(val)}>
                         <Option value="666353">Adult Ultimate Race Experience</Option>
                         <Option value="22087459">Adult Combat Karts</Option>
                         <Option value="104013">Three4Two</Option>
