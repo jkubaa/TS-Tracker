@@ -1,19 +1,30 @@
-
+import { Button } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react"
 
 function SessionEntry(props : any) {
-    
-    const [date, time] = props.sessionDate.split("T")
-
+    const dateTime: Date = new Date(props.sessionDate)
     const peopleBooked = props.sessionCapacity - props.sessionFreeSpots
 
     return (
-        <section className="text-white border border-white rounded-lg text-center m-2 my-4">
-            <h2 className="text-lg font-semibold">{props.sessionName}</h2>
-            <p>Time: <span className="font-semibold">{time}</span></p>
-            <p>Slots left: <span className="font-semibold">{props.sessionFreeSpots} / {props.sessionCapacity}</span></p>
-            <p className="text-sm"><span className="font-semibold">{peopleBooked}</span> racers booked</p>
-            <a className="font-semibold text-stroke-3 rounded-lg bg-gradient-to-r from-red-300 to-red-500 hover:from-red-200 hover:to-red-400 
-                            shadow-none hover:shadow-lg hover:shadow-gray-600 px-2.5 py-2 text-xl select-none cursor-pointer block mx-5 my-3">Book</a>
+        <section className="grid grid-cols-2 text-white border border-white rounded-lg text-center m-2 my-4">
+            <div>
+                <div className="flex flex-col items-center justify-center">
+                    <h2 className="text-lg font-semibold mt-2">{props.sessionName}</h2>
+                    <p className="my-2">🕒 <span className="font-semibold">{dateTime.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"})}</span></p>
+                </div>
+
+                <div className="flex flex-col items-center justify-center mt-2 mb-4">
+                    <a href=""><Button variant="gradient" color="red" className="rounded-lg" placeholder="">Book</Button></a>
+                </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center">
+                <p className="text-sm">Slots left: <br></br><span className="font-bold italic text-4xl text-red-500">{props.sessionFreeSpots}/{props.sessionCapacity}</span></p>
+                <p className="text-sm"><span className="font-semibold">{peopleBooked}</span> racers booked</p>
+            </div>
+
+
+            
         </section>
     )
 }

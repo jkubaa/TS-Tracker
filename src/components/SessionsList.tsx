@@ -1,12 +1,13 @@
 import useSWR from "swr"
-import axios from "axios";
+import axios from "axios"
+import { Spinner } from "@material-tailwind/react"
 
 import { useEffect, useState } from "react"
 
 // Components
 import SessionEntry from "./SessionEntry";
 import SessionFilter from "./SessionFilter";
-//import SessionFilter from "./SessionFilter";
+
 
 interface AccessTokenResponse {
     ClientKey: string,
@@ -21,9 +22,8 @@ interface SessionResponse {
 export default function SessionsList() {
     const [startDate, setStartDate] = useState(new Date())
     const [productId, setProductId] = useState("666353")
-
-    // Fetch sessions from the API
     const apiKey = FetchAccessToken()
+
     const sessionsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + startDate.toISOString()
 
     const tsApiBody = {
@@ -35,14 +35,14 @@ export default function SessionsList() {
     
     const tsApiHeaders = {
         method: "POST",
-        "X-Fast-AccessToken": "39cweswbciibriiberr"
+        "X-Fast-AccessToken": apiKey
     }
 
     const fetcher = (url: string) => 
         axios.post(url, tsApiBody, { headers: tsApiHeaders })
         .then(response => response.data)
 
-    const { data, error, isLoading } = useSWR<SessionResponse>(sessionsUrl, fetcher)
+    const { data, error, isLoading } = useSWR<SessionResponse>(() => apiKey ? sessionsUrl : false, fetcher)
 
     const sessionEntries = data?.proposals.map((proposal, index) => (
         <SessionEntry
@@ -53,11 +53,22 @@ export default function SessionsList() {
             key={index}
         />
     ));
+    const noResults = (sessionEntries?.length == 0) && !isLoading
+    
 
     return (
         <>
         <h1 className="text-white text-center text-2xl font-semibold">Sessions List</h1>
         <SessionFilter startDate={startDate} setStartDate={setStartDate} setProductId={setProductId}/>
+
+        {isLoading && <div className="flex justify-center my-10">
+                        <Spinner className="h-8 w-8" color="red"/>
+                    </div>}
+
+        {noResults && <p className="text-center text-lg font-semibold text-white">No sessions found or sessions are all at capacity.</p>}
+
+
+
         <div className="grid grid-cols-4">
             {sessionEntries}
         </div>
