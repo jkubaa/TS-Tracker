@@ -84,10 +84,7 @@ export default function SessionFilter(props: any) {
                                 onChange={() => null}
                                 value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGb })] : []}
                                 crossOrigin=""
-<<<<<<< HEAD
                                 onFocus={(e) => e.target.readOnly = true} 
-=======
->>>>>>> 4401eb5173ac4d748725f67c5f164e6a83dd59e2
                             />
                         </PopoverHandler>
                         <PopoverContent className="bg-gray-800 border-0" placeholder="">
