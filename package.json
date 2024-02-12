@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+<<<<<<< HEAD
     "devhost": "vite --host",
+=======
+>>>>>>> 4401eb5173ac4d748725f67c5f164e6a83dd59e2
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
