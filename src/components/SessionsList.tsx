@@ -76,7 +76,8 @@ export default function SessionsList() {
 }
 
 function FetchAccessToken() {
-    const accessTokenUrl: string = "https://backend.sms-timing.com/api/connectioninfo/encrypted?message=U2FYdGVkX19I1GUtROBK1w%2B2YxHDxGwW582h0a%2BLf2KQihI1sndOHoPnZGr1AnVE&locationType=3&type=booking"
+    const messageToken: string = "U2FsdGVkX1%2ByoQnYLlCRfDkEihGKenZ3d%2FDMATtpA1hGE4astDf8KJ%2Bzrt63MHII"
+    const accessTokenUrl: string = "https://backend.sms-timing.com/api/connectioninfo/encrypted?message=" + messageToken + "&locationType=3&type=booking"
     const fetcher = (url: string) => 
         fetch(url)
         .then(response => response.json())
