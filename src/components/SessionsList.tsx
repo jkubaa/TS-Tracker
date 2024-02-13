@@ -57,7 +57,7 @@ export default function SessionsList() {
 
     return (
         <>
-        <h1 className="text-white text-center text-2xl font-semibold">Sessions List</h1>
+        <h1 className="text-white text-center text-2xl font-semibold mt-3">Karting Sessions List</h1>
         <SessionFilter startDate={startDate} setStartDate={setStartDate} setProductId={setProductId}/>
 
         {isLoading && <div className="flex justify-center my-10">

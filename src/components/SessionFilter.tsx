@@ -80,7 +80,7 @@ export default function SessionFilter(props: any) {
                             <Input
                                 label="Date"
                                 color="red"
-                                className="text-white"
+                                className="text-white cursor-pointer"
                                 onChange={() => null}
                                 value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGb })] : []}
                                 crossOrigin=""
