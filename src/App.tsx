@@ -7,11 +7,11 @@ import logo from "./assets/faviconicon.png"
 function App() {
   return (
     <div className="flex flex-col h-screen">
-      <header className="p-5 bg-gray-800">
+      <header className="p-5 bg-gray-800 rounded m-3">
         <div className="">
           <a href="" className="flex items-center justify-center select-none">
-            <img src={logo} alt="logo" className="w-16 h-16" />
-            <span className="text-white text-5xl font-semibold ml-4 flex items-center">TS Tracker</span>
+            <img src={logo} alt="logo" className="w-14 h-14 sm:w-16 sm:h-16" />
+            <span className="text-white text-4xl sm:text-5xl font-semibold ml-4 flex items-center ">TS Tracker</span>
           </a>
         </div>
       </header>
@@ -20,7 +20,7 @@ function App() {
         <SessionsList />
       </main>
 
-      <footer className="flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t bg-gray-800 border-black py-4 mt-5 text-center md:justify-between">
+      <footer className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t bg-gray-800 border-gray-900 py-4 mt-5 text-center md:justify-between rounded m-3">
         <p className="text-white ml-5">Not affiliated with TeamSport</p>
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8 mr-5">
           <li>

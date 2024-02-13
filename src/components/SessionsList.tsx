@@ -7,6 +7,8 @@ import { useState } from "react"
 // Components
 import SessionEntry from "./SessionEntry";
 import SessionFilter from "./SessionFilter";
+import PinnedSessions from "./PinnedSessions";
+import SessionInvite from "./SessionInvite";
 
 
 interface AccessTokenResponse {
@@ -46,6 +48,7 @@ export default function SessionsList() {
 
     const sessionEntries = data?.proposals.map((proposal, index) => (
         <SessionEntry
+            productId={productId}
             sessionName={proposal.blocks[0].block.name}
             sessionDate={proposal.blocks[0].block.start}
             sessionCapacity={proposal.blocks[0].block.capacity}
@@ -60,17 +63,19 @@ export default function SessionsList() {
         <h1 className="text-white text-center text-2xl font-semibold mt-3">Karting Sessions List</h1>
         <SessionFilter startDate={startDate} setStartDate={setStartDate} setProductId={setProductId}/>
 
+        <PinnedSessions/>
+
         {isLoading && <div className="flex justify-center my-10">
                         <Spinner className="h-8 w-8" color="red"/>
                     </div>}
 
-        {noResults && <p className="text-center text-lg font-semibold text-white mt-8">No sessions found or sessions are all at capacity.</p>}
+        {noResults && <p className="text-center text-lg font-semibold text-white mt-8">No sessions found or sessions are all at capacity. Please try a different date or session.</p>}
 
-
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
             {sessionEntries}
         </div>
+
+        <SessionInvite apiKey={apiKey} />
         </>
     );
 }
