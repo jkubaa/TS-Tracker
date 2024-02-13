@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
     Accordion,
     AccordionHeader,
@@ -15,6 +15,10 @@ export default function PinnedSessions() {
     const noResults = false
 
     const handleOpen = (value: any) => setOpen(open === value ? 0 : value)
+
+    useEffect(() => {
+        setHidden(true)
+    }, [])
 
     return (
         <>

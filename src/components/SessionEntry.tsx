@@ -30,6 +30,10 @@ export default function SessionEntry(props: any) {
         setHoveringOverSection(isHovering);
     };
 
+    if (value) {
+        // Do nothing
+    }
+
     return (
         <>
             <section
