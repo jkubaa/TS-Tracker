@@ -64,7 +64,7 @@ export default function SessionsList() {
                         <Spinner className="h-8 w-8" color="red"/>
                     </div>}
 
-        {noResults && <p className="text-center text-lg font-semibold text-white">No sessions found or sessions are all at capacity.</p>}
+        {noResults && <p className="text-center text-lg font-semibold text-white mt-8">No sessions found or sessions are all at capacity.</p>}
 
 
 
