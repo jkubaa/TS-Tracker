@@ -1,3 +1,6 @@
+import { useState } from "react"
+
+import { Button } from "@material-tailwind/react"
 
 import SessionsList from "./components/SessionsList"
 
@@ -5,22 +8,36 @@ import SessionsList from "./components/SessionsList"
 import logo from "./assets/faviconicon.png"
 
 function App() {
+  const [is12h, setIs12h] = useState(false)
+
   return (
     <div className="flex flex-col h-screen">
-      <header className="p-5 bg-gray-800 rounded m-3">
-        <div className="">
+      <header className="p-5 bg-gray-800 rounded m-3 flex justify-between items-center">
+        <div className="flex items-center">
           <a href="" className="flex items-center justify-center select-none">
             <img src={logo} alt="logo" className="w-14 h-14 sm:w-16 sm:h-16" />
             <span className="text-white text-4xl sm:text-5xl font-semibold ml-4 flex items-center ">TS Tracker</span>
           </a>
         </div>
+        <div>
+          <Button 
+            className="bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 rounded" 
+            onClick={() => {
+              if (is12h) {setIs12h(false)} 
+              else {setIs12h(true)}
+            }}
+            placeholder=""
+            >
+              12H/24H
+          </Button>
+        </div>
       </header>
 
       <main className="grow p-2">
-        <SessionsList />
+        <SessionsList is12h={is12h} />
       </main>
 
-      <footer className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t bg-gray-800 border-gray-900 py-4 mt-5 text-center md:justify-between rounded m-3">
+      <footer className="flex flex-row flex-wrap items-center justify-center bg-gray-800 py-4 mt-5 text-center md:justify-between rounded mx-3">
         <p className="text-white ml-5">Not affiliated with TeamSport</p>
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8 mr-5">
           <li>
@@ -36,6 +53,8 @@ function App() {
           </li>
         </ul>
       </footer>
+
+      <div className="pb-3"></div>
     </div>
   )
 }

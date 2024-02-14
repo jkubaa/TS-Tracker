@@ -1,4 +1,4 @@
-import React from "react"
+import { useState } from "react"
 import {
     Button,
     Dialog,
@@ -14,21 +14,17 @@ import { CheckIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline"
 
 export default function SessionEntry(props: any) {
     const [value, copy] = useCopyToClipboard()
-    const [copied, setCopied] = React.useState(false)
-    const [hoveringOverSection, setHoveringOverSection] = React.useState(false)
+    const [copied, setCopied] = useState(false)
 
     const dateTime: Date = new Date(props.sessionDate)
     const peopleBooked = props.sessionCapacity - props.sessionFreeSpots
 
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(!open)
 
     const arrivalTime = new Date(dateTime.getTime() - 40 * 60000);
 
     const bookHref = "https://booking.sms-timing.com/teamsportnewcastle/book/product-list?adults=1&kids=0&productId=" + props.productId + "&people=1&datetime=" + dateTime.toISOString()
-    const handleSectionHover = (isHovering: boolean) => {
-        setHoveringOverSection(isHovering);
-    };
 
     if (value) {
         // Do nothing
@@ -36,30 +32,24 @@ export default function SessionEntry(props: any) {
 
     return (
         <>
-            <section
-                className="grid grid-cols-2 text-white border border-white rounded-lg text-center mx-3 my-4 relative"
-                onMouseEnter={() => handleSectionHover(true)}
-                onMouseLeave={() => handleSectionHover(false)}>
-                {hoveringOverSection && (
-                    <div className="absolute top-0 right-0 mt-2 mr-2">
-                        <Tooltip content={copied ? "Copied" : "Copy invitation link"} placement="top" placeholder="">
-                            <IconButton
-                                onMouseLeave={() => setCopied(false)}
-                                onClick={() => {
-                                    copy("https://tstracker.pages.dev/invite/?pid=" + props.productId + "&date=" + props.sessionDate)
-                                    setCopied(true);
-                                }}
-                                placeholder=""
-                            >
-                                {copied ? (
-                                    <CheckIcon className="h-5 w-5 text-white" />
-                                ) : (
-                                    <DocumentDuplicateIcon className="h-5 w-5 text-white" />
-                                )}
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                )}
+            <section className="grid grid-cols-2 text-white border border-white rounded-lg text-center mx-3 my-4 relative" onMouseLeave={() => setCopied(false)} >
+                <div className="absolute top-0 right-0 mt-2 mr-2">
+                    <Tooltip content={copied ? "Copied" : "Copy invitation link"} placement="top" placeholder="">
+                        <IconButton
+                            onClick={() => {
+                                copy("https://tstracker.pages.dev/invite/?pid=" + props.productId + "&date=" + props.sessionDate)
+                                setCopied(true);
+                            }}
+                            placeholder=""
+                        >
+                            {copied ? (
+                                <CheckIcon className="h-5 w-5 text-white" />
+                            ) : (
+                                <DocumentDuplicateIcon className="h-5 w-5 text-white" />
+                            )}
+                        </IconButton>
+                    </Tooltip>
+                </div>
 
                 <div className="pl-5 py-1">
                     <div className="flex flex-col items-center justify-center">
@@ -69,8 +59,8 @@ export default function SessionEntry(props: any) {
                             <Tooltip content="Venue" placement="right" placeholder=""><li><p className="my-2">📍 <span className="font-semibold">Newcastle</span></p></li></Tooltip>
                             <li>
                                 <p className="my-2">
-                                    <Tooltip content="Arrive by time" placement="bottom" placeholder=""><span>🚀 <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span></span></Tooltip>
-                                    <Tooltip content="Lights out time" placement="bottom" placeholder=""><span className="mr-1">&nbsp;&nbsp;🚥 <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span></span></Tooltip>
+                                    <Tooltip content="Arrive by time" placement="bottom" placeholder=""><span>🚀 <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></Tooltip>
+                                    <Tooltip content="Lights out time" placement="bottom" placeholder=""><span className="mr-1">&nbsp;&nbsp;🚥 <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12:  props.is12h })}</span></span></Tooltip>
                                 </p>
                             </li>
                         </ul>
@@ -97,8 +87,8 @@ export default function SessionEntry(props: any) {
                                 <ul className="list-none text-lg text-left leading-tight py-1">
                                     <li><p className="my-2">📅 Date: <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
                                     <li><p className="my-2">📍 Location: <span className="font-semibold">Newcastle</span></p></li>
-                                    <li><p className="my-2">🚀 Arrive by: <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span></p></li>
-                                    <li><span className="mr-1">🚥 Lights out: <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span></span></li>
+                                    <li><p className="my-2">🚀 Arrive by: <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></p></li>
+                                    <li><span className="mr-1">🚥 Lights out: <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></li>
                                 </ul>
                             </div>
                         </div>
@@ -108,9 +98,9 @@ export default function SessionEntry(props: any) {
                             <p className=""><span className="font-semibold">{peopleBooked}</span> racers</p>
                         </div>
                     </section>
-                    <br></br><br></br>The session should be automatically added to your basket. 
+                    <br></br><br></br>The session should be automatically added to your basket.
                     <span className="font-semibold"> Please check that the correct session
-                    has been added to your basket before completing your booking.</span>
+                        has been added to your basket before completing your booking.</span>
                 </DialogBody>
 
                 <DialogFooter placeholder="">

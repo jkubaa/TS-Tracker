@@ -5,10 +5,10 @@ import { Spinner } from "@material-tailwind/react"
 import { useState } from "react"
 
 // Components
-import SessionEntry from "./SessionEntry";
-import SessionFilter from "./SessionFilter";
-import PinnedSessions from "./PinnedSessions";
-import SessionInvite from "./SessionInvite";
+import SessionEntry from "./SessionEntry"
+import SessionFilter from "./SessionFilter"
+//import PinnedSessions from "./PinnedSessions"
+import SessionInvite from "./SessionInvite"
 
 
 interface AccessTokenResponse {
@@ -21,7 +21,7 @@ interface SessionResponse {
     proposals: any[]
 }
 
-export default function SessionsList() {
+export default function SessionsList(props: any) {
     const [startDate, setStartDate] = useState(new Date())
     const [productId, setProductId] = useState("666353")
     const apiKey = FetchAccessToken()
@@ -53,17 +53,19 @@ export default function SessionsList() {
             sessionDate={proposal.blocks[0].block.start}
             sessionCapacity={proposal.blocks[0].block.capacity}
             sessionFreeSpots={proposal.blocks[0].block.freeSpots}
+            is12h={props.is12h}
             key={index}
         />
     ))
+
     const noResults = (sessionEntries?.length == 0) && !isLoading
 
     return (
         <>
         <h1 className="text-white text-center text-2xl font-semibold mt-3">Karting Sessions List</h1>
-        <SessionFilter startDate={startDate} setStartDate={setStartDate} setProductId={setProductId}/>
 
-        <PinnedSessions/>
+        
+        <SessionFilter startDate={startDate} setStartDate={setStartDate} setProductId={setProductId}/>
 
         {isLoading && <div className="flex justify-center my-10">
                         <Spinner className="h-8 w-8" color="red"/>
@@ -75,7 +77,7 @@ export default function SessionsList() {
             {sessionEntries}
         </div>
 
-        <SessionInvite apiKey={apiKey} />
+        <SessionInvite apiKey={apiKey} is12h={props.is12h} />
         </>
     );
 }

@@ -13,8 +13,8 @@ export default function SessionInviteEntry(props : any) {
                     <ul className="list-none text-lg text-left leading-tight py-1"> 
                         <li><p className="my-2">📅 Date: <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
                         <li><p className="my-2">📍 Location: <span className="font-semibold">Newcastle</span></p></li>
-                        <li><p className="my-2">🚀 Arrive by: <span className="font-semibold">{arrivalTime.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"})}</span></p></li>
-                        <li><span className="mr-1"> 🚥 Lights out: <span className="font-semibold">{dateTime.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"})}</span></span></li>
+                        <li><p className="my-2">🚀 Arrive by: <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute:"2-digit", hour12: props.is12h })}</span></p></li>
+                        <li><span className="mr-1"> 🚥 Lights out: <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute:"2-digit", hour12: props.is12h })}</span></span></li>
                     </ul>
                 </div>
             </div>
