@@ -1,22 +1,15 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 // Date Picker imports
-import {
-    Input,
-    Popover,
-    PopoverHandler,
-    PopoverContent,
-    Select,
-    Option
-} from "@material-tailwind/react"
+import { Input, Popover, PopoverHandler, PopoverContent, Select, Option } from "@material-tailwind/react"
 import { format } from "date-fns"
 import enGb from 'date-fns/locale/en-GB'
 import { DayPicker } from "react-day-picker"
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
 
-export default function SessionFilter(props: any) {
-    const [isGridFilterEnabled, setIsGridEnabled] = React.useState(false)       
-    
+export default function EventFilter(props: any) {
+    const [isGridFilterEnabled, setIsGridEnabled] = useState(false)
+
     // Calendar functions
     const isToday = (date: Date) => {
         const today = new Date();
@@ -32,7 +25,7 @@ export default function SessionFilter(props: any) {
         const today = new Date();
         if (isGridFilterEnabled) {
             return day !== 1 && day !== 4 || (date < today && !isToday(date))
-        } else { 
+        } else {
             return day === -1 || (date < today && !isToday(date))
         }
     }
@@ -72,7 +65,7 @@ export default function SessionFilter(props: any) {
                     #GRID
                 </label>
             </div>
-            
+
             <div className="flex flex-col my-5 md:flex-row justify-center items-center">
                 <div className="px-2 w-72 mb-4 md:mb-0">
                     <Popover placement="bottom" animate={{ mount: { y: 0 }, unmount: { y: 15 } }}>
@@ -84,7 +77,7 @@ export default function SessionFilter(props: any) {
                                 onChange={() => null}
                                 value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGb })] : []}
                                 crossOrigin=""
-                                onFocus={(e) => e.target.readOnly = true} 
+                                onFocus={(e) => e.target.readOnly = true}
                             />
                         </PopoverHandler>
                         <PopoverContent className="bg-gray-800 border-0" placeholder="">
@@ -130,7 +123,7 @@ export default function SessionFilter(props: any) {
                 </div>
 
                 {!isGridFilterEnabled && <div className="w-72 px-2 mb-4 md:mb-0">
-                    <Select placeholder="" label="Session" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="666353" onChange={(val) => props.setProductId(val)}>
+                    <Select placeholder="" label="Event" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="666353" onChange={(val) => props.setProductId(val)}>
                         <Option value="666353">Adult Ultimate Race Experience</Option>
                         <Option value="22087459">Adult Combat Karts</Option>
                         <Option value="104013">Three4Two</Option>
@@ -140,7 +133,7 @@ export default function SessionFilter(props: any) {
                 </div>}
 
                 {isGridFilterEnabled && <div className="w-72 px-2 mb-4 md:mb-0">
-                    <Select placeholder="" label="Session" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="7801970" onChange={(val) => props.setProductId(val)}>
+                    <Select placeholder="" label="Event" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="7801970" onChange={(val) => props.setProductId(val)}>
                         <Option value="7801970">#GRID 342 - SOCIAL+</Option>
                         <Option value="33404672">#GRID Series - CLUB+</Option>
                         <Option value="5013415">#GRID Tin Tops - CLUB+</Option>

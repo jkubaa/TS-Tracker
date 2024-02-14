@@ -3,26 +3,26 @@ import { Dialog, DialogHeader, DialogBody, DialogFooter, Button, Spinner } from 
 import useSWR from "swr"
 import axios from "axios"
 
-import SessionInviteEntry from "./SessionInviteEntry"
+import SharedEventEntry from "./SharedEventEntry"
 
-interface SessionResponse {
+interface EventResponse {
     proposals: any[]
 }
 
-export default function SessionInvite(props: any) {
+export default function SharedEvent(props: any) {
     const [open, setOpen] = React.useState(false)
     const handleOpen = () => setOpen(!open)
     const [productId, setProductId] = useState("666353")
-    const [sessionExists, setSessionExists] = useState(false)
+    const [eventExists, setEventExists] = useState(false)
     const [clearUrl, setClearUrl] = useState(false)
 
     const queryParams = new URLSearchParams(window.location.search)
     const productIdParam = queryParams.get("pid")
-    const sessionDateParam = queryParams.get("date")
+    const eventDateParam = queryParams.get("date")
 
-    const sessionsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + sessionDateParam
+    const eventsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + eventDateParam
 
-    const bookHref = "https://booking.sms-timing.com/teamsportnewcastle/book/product-list?adults=1&kids=0&productId=" + productIdParam  + "&people=1&datetime=" + sessionDateParam
+    const bookHref = "https://booking.sms-timing.com/teamsportnewcastle/book/product-list?adults=1&kids=0&productId=" + productIdParam + "&people=1&datetime=" + eventDateParam
 
     const tsApiBody = {
         "dynamicLines": null,
@@ -40,33 +40,41 @@ export default function SessionInvite(props: any) {
         axios.post(url, tsApiBody, { headers: tsApiHeaders })
             .then(response => response.data)
 
-    const { data, isLoading } = useSWR<SessionResponse>(() => sessionDateParam ? (props.apiKey ? sessionsUrl : false) : null, fetcher)
+    const { data, isLoading } = useSWR<EventResponse>(() => eventDateParam ? (props.apiKey ? eventsUrl : false) : null, fetcher)
 
+    // If the event data is not empty, set eventExists to true
     useEffect(() => {
         if ((data?.proposals ?? []).length > 0) {
-            setSessionExists(true)
+            setEventExists(true)
         }
     }, [data])
 
-    const sessionEntry = data?.proposals
-        ?.filter((proposal) => proposal.blocks[0].block.start === sessionDateParam)
+    const eventEntry = data?.proposals
+        ?.filter((proposal) => proposal.blocks[0].block.start === eventDateParam)
         ?.slice(0, 1) // Limit to one result
         ?.map((proposal, index) => (
-            <SessionInviteEntry
-                sessionName={proposal.blocks[0].block.name}
-                sessionDate={proposal.blocks[0].block.start}
-                sessionCapacity={proposal.blocks[0].block.capacity}
-                sessionFreeSpots={proposal.blocks[0].block.freeSpots}
+            <SharedEventEntry
+                eventName={proposal.blocks[0].block.name}
+                eventDate={proposal.blocks[0].block.start}
+                eventCapacity={proposal.blocks[0].block.capacity}
+                eventFreeSpots={proposal.blocks[0].block.freeSpots}
                 key={index}
             />
-        ))
+        ));
+
+    // If the eventEntry is empty, set eventExists to false
+    useEffect(() => {
+        if (!eventEntry || eventEntry.length === 0) {
+            setEventExists(false);
+        }
+    }, [eventEntry])
 
     useEffect(() => {
-        if (productIdParam && sessionDateParam && window.location.pathname.includes("/invite/")) {
+        if (productIdParam && eventDateParam && window.location.pathname.includes("/shared/")) {
             setProductId(productIdParam)
             setOpen(true);
         }
-    }, [productIdParam, sessionDateParam])
+    }, [productIdParam, eventDateParam])
 
     useEffect(() => {
         if (clearUrl === true) {
@@ -86,19 +94,19 @@ export default function SessionInvite(props: any) {
             className="bg-gray-800"
             placeholder="">
 
-            <DialogHeader className="text-white" placeholder="">You have been invited to a TeamSport Session!</DialogHeader>
+            <DialogHeader className="text-white" placeholder="">A TeamSport event has been shared with you!</DialogHeader>
 
             {isLoading && <div className="flex justify-center my-10">
                 <Spinner className="h-8 w-8" color="red" />
             </div>}
 
-            {sessionExists && <div>
+            {eventExists && <div>
                 <DialogBody className="text-white" placeholder="">
-                    {sessionEntry}
+                    {eventEntry}
                     <br></br><br></br>On clicking the book button you will be redirected to TeamSport's booking website to complete your booking.
-                    The session should be automatically added to your basket. 
-                    <span className="font-semibold"> Please check that the correct session
-                    has been added to your basket before completing your booking.</span>
+                    The event should be automatically added to your basket.
+                    <span className="font-semibold"> Please check that the correct event
+                        has been added to your basket before completing your booking.</span>
                 </DialogBody>
 
                 <DialogFooter placeholder="">
@@ -120,8 +128,8 @@ export default function SessionInvite(props: any) {
                     </Button></a>
                 </DialogFooter> </div>}
 
-            {!sessionExists && <div><DialogBody className="text-white" placeholder="">
-                <p>Sorry, the session you have been invited to no longer exists or has been filled.</p>
+            {!isLoading && !eventExists && <div><DialogBody className="text-white" placeholder="">
+                <p>Sorry, this event is full or does not exist.</p>
             </DialogBody>
                 <DialogFooter placeholder="">
                     <Button variant="text"

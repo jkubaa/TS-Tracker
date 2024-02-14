@@ -6,7 +6,7 @@ import {
     Spinner
 } from "@material-tailwind/react"
 
-export default function PinnedSessions() {
+export default function PinnedEvents() {
     const [open, setOpen] = useState(1)
     const [noResults, setNoResults] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +23,7 @@ export default function PinnedSessions() {
             <div className="mt-6 mb-3 sm:mt-7 sm:mb-5 sm:mx-10 px-3 pb-5 bg-gray-800 rounded">
                 <Accordion open={open === 1} placeholder="">
                     <AccordionHeader onClick={() => handleOpen(1)} className="text-white hover:text-gray-400" placeholder="">
-                        📌 Pinned Sessions (0)
+                        📌 Pinned Events (0)
                     </AccordionHeader>
 
                     <AccordionBody>
@@ -31,10 +31,10 @@ export default function PinnedSessions() {
                             <Spinner className="h-8 w-8" color="red" />
                         </div>}
 
-                        {noResults && <p className="text-center text-lg font-semibold text-white mt-5">No pinned sessions found. They may be at capacity.</p>}
+                        {noResults && <p className="text-center text-lg font-semibold text-white mt-5">No pinned events found. They may be at capacity.</p>}
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            
+
                         </div>
                     </AccordionBody>
                 </Accordion>

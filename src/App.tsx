@@ -1,8 +1,8 @@
 import { useState } from "react"
-
 import { Button } from "@material-tailwind/react"
 
-import SessionsList from "./components/SessionsList"
+// Components
+import EventsList from "./components/EventsList"
 
 // Images
 import logo from "./assets/faviconicon.png"
@@ -20,21 +20,21 @@ function App() {
           </a>
         </div>
         <div>
-          <Button 
-            className="bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 rounded" 
+          <Button
+            className="bg-red-700 hover:bg-red-900 text-white font-bold py-2 px-4 rounded"
             onClick={() => {
-              if (is12h) {setIs12h(false)} 
-              else {setIs12h(true)}
+              if (is12h) { setIs12h(false) }
+              else { setIs12h(true) }
             }}
             placeholder=""
-            >
-              12H/24H
+          >
+            12H/24H
           </Button>
         </div>
       </header>
 
       <main className="grow p-2">
-        <SessionsList is12h={is12h} />
+        <EventsList is12h={is12h} />
       </main>
 
       <footer className="flex flex-row flex-wrap items-center justify-center bg-gray-800 py-4 mt-5 text-center md:justify-between rounded mx-3">
