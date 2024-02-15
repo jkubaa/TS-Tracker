@@ -41,7 +41,7 @@ function App() {
         <p className="text-white ml-5">Not affiliated with TeamSport</p>
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8 mr-5">
           <li>
-            <a href="https://github.com/jkubaa" target="_blank">
+            <a href="https://github.com/jkubaa/TS-Tracker" target="_blank">
               <svg className="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   fillRule="evenodd"

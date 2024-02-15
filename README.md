@@ -7,6 +7,7 @@
   <li>Session title</li>
   <li>Session time</li>
   <li>Session slots and number of racers signed up (in real time)</li>
-  <li>Book button that leads directly to TeamSport's booking system and automatically adds that session to cart</li>
+  <li>Share button that copies a URL that links directly to that session displaying information about it and a option to book</li>
+  <li>Book button that leads directly to TeamSport's booking system and automatically adds that session to cart.</li>
 </ul>
 <p>More features are planned including adding all TeamSport venues and the rest of the karting sessions.</p>

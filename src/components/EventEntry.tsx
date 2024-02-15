@@ -45,12 +45,23 @@ export default function EventEntry(props: any) {
                     <div className="flex flex-col items-center justify-center">
                         <h2 className="text-lg font-semibold mt-2">{props.eventName}</h2>
                         <ul className="list-none text-sm text-center leading-tight py-1 ">
-                            <Tooltip content="Date" placement="right" placeholder=""><li><p className="my-2">📅 <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li></Tooltip>
-                            <Tooltip content="Venue" placement="right" placeholder=""><li><p className="my-2">📍 <span className="font-semibold">Newcastle</span></p></li></Tooltip>
+                            <Tooltip content="Date" placement="right" placeholder="">
+                                <li><p className="my-2">📅 <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
+                            </Tooltip>
+
+                            <Tooltip content="Venue" placement="right" placeholder="">
+                                <li><p className="my-2">📍 <span className="font-semibold">Newcastle</span></p></li>
+                            </Tooltip>
+
                             <li>
                                 <p className="my-2">
-                                    <Tooltip content="Arrive by time" placement="bottom" placeholder=""><span>🚀 <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></Tooltip>
-                                    <Tooltip content="1st session time" placement="bottom" placeholder=""><span className="mr-1">&nbsp;&nbsp;🚥 <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></Tooltip>
+                                    <Tooltip content="Arrive by time" placement="bottom" placeholder="">
+                                        <span>🚀 <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span>
+                                    </Tooltip>
+
+                                    <Tooltip content="1st session time" placement="bottom" placeholder="">
+                                        <span className="mr-1">&nbsp;&nbsp;🚥 <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span>
+                                    </Tooltip>
                                 </p>
                             </li>
                         </ul>
