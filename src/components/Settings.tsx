@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Button, IconButton, Dialog, DialogHeader, DialogBody, DialogFooter, Select, Option } from "@material-tailwind/react"
-
-import settingsIcon from "../assets/settings-icon.svg"
 
 export default function Settings(props: any) {
   const [open, setOpen] = useState(false)
