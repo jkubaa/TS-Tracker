@@ -29,9 +29,9 @@ function App() {
         <EventsList is12h={is12h} setIs12h={setIs12h} />
       </main>
 
-      <footer className="flex flex-row flex-wrap items-center justify-center bg-gray-800 py-4 mt-5 text-center md:justify-between rounded mx-3">
-        <p className="text-white ml-5">Not affiliated with TeamSport</p>
-        <ul className="flex flex-wrap items-center gap-y-2 gap-x-8 mr-5">
+      <footer className="flex flex-col md:flex-row flex-wrap items-center justify-center bg-gray-800 py-4 mt-5 text-center md:justify-between rounded mx-3">
+        <p className="text-white md:ml-5">Not affiliated with TeamSport</p>
+        <ul className="flex flex-wrap items-center gap-y-2 gap-x-8 mt-2 md:mt-0 md:mr-5">
           <li>
             <a href="https://github.com/jkubaa/TS-Tracker" target="_blank">
               <IconButton className="rounded bg-[#333333] hover:shadow-[#333333]/20 focus:shadow-[#333333]/20 active:shadow-[#333333]/10" placeholder="">
@@ -47,7 +47,6 @@ function App() {
           </li>
         </ul>
       </footer>
-
       <div className="pb-3"></div>
     </div>
   )
