@@ -1,8 +1,7 @@
+import { useState } from "react"
 import useSWR from "swr"
 import axios from "axios"
-import { Spinner } from "@material-tailwind/react"
-
-import { useState } from "react"
+import { Spinner, Button } from "@material-tailwind/react"
 
 // Components
 import EventEntry from "./EventEntry"
@@ -60,6 +59,18 @@ export default function EventsList(props: any) {
 
     const noResults = (eventEntries?.length == 0) && !isLoading
 
+    const goToPreviousDay = () => {
+        const previousDate = new Date(startDate)
+        previousDate.setDate(previousDate.getDate() - 1)
+        setStartDate(previousDate)
+    }
+
+    const goToNextDay = () => {
+        const nextDate = new Date(startDate)
+        nextDate.setDate(nextDate.getDate() + 1)
+        setStartDate(nextDate)
+    }
+
     return (
         <>
             <h1 className="text-white text-center text-2xl font-semibold mt-3">Go Karting Events List</h1>
@@ -70,7 +81,14 @@ export default function EventsList(props: any) {
                 <Spinner className="h-8 w-8" color="red" />
             </div>}
 
-            {noResults && <p className="text-center text-lg font-semibold text-white mt-8">No events found or events are all at capacity. Please try a different date or event.</p>}
+            {noResults && <div className="flex flex-col items-center">
+            <p className="text-center text-lg font-semibold text-white mt-8">No events found or events are all at capacity. Please try a different date or event.</p>
+
+            <div className="flex flex-col sm:flex-row justify-between my-5">
+                <Button variant="outlined" className="hover:bg-red-900/25  border-red-500 text-white font-bold py-2 px-4 rounded mx-5 mb-3 w-44" onClick={goToPreviousDay} placeholder="">Search previous day</Button>
+                <Button variant="outlined" className="hover:bg-red-900/25  border-red-500 text-white font-bold py-2 px-4 rounded mx-5 mb-3 w-44" onClick={goToNextDay} placeholder="">Search next day</Button>
+            </div>
+            </div>}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
                 {eventEntries}
