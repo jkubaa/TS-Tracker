@@ -24,7 +24,7 @@ export default function EventEntry(props: any) {
 
     return (
         <>
-            <section className="grid grid-cols-2 text-white border border-white rounded-lg text-center mx-3 my-4 relative" onMouseLeave={() => setCopied(false)} >
+            <section className="grid grid-cols-2 bg-gray-800 text-white shadow-md shadow-black rounded-lg text-center mx-3 my-4 relative" onMouseLeave={() => setCopied(false)} >
                 <div className="absolute top-0 right-0 mt-2 mr-2">
                     <Tooltip content={copied ? "Copied!" : "Copy share link"} placement="top" placeholder="">
                         <IconButton
@@ -32,6 +32,7 @@ export default function EventEntry(props: any) {
                                 copy("https://tstracker.pages.dev/shared/?pid=" + props.productId + "&date=" + props.eventDate)
                                 setCopied(true);
                             }}
+                            className="rounded-full"
                             placeholder=""
                         >
                             {copied ? (<CheckIcon className="h-5 w-5 text-white" />)
@@ -45,25 +46,23 @@ export default function EventEntry(props: any) {
                     <div className="flex flex-col items-center justify-center">
                         <h2 className="text-lg font-semibold mt-2">{props.eventName}</h2>
                         <ul className="list-none text-sm text-center leading-tight py-1 ">
-                            <Tooltip content="Date" placement="right" placeholder="">
-                                <li><p className="my-2">📅 <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
-                            </Tooltip>
-
                             <Tooltip content="Venue" placement="right" placeholder="">
                                 <li><p className="my-2">📍 <span className="font-semibold">Newcastle</span></p></li>
                             </Tooltip>
 
-                            <li>
-                                <p className="my-2">
-                                    <Tooltip content="Arrive by time" placement="bottom" placeholder="">
-                                        <span>🚀 <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span>
-                                    </Tooltip>
+                            <Tooltip content="Date" placement="right" placeholder="">
+                                <li><p className="my-2">📅 <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
+                            </Tooltip>
 
-                                    <Tooltip content="1st session time" placement="bottom" placeholder="">
-                                        <span className="mr-1">&nbsp;&nbsp;🚥 <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span>
-                                    </Tooltip>
-                                </p>
-                            </li>
+                            <div className="flex flex-col sm:flex-row items-center justify-center space-x-2 space-y-2 sm:space-y-0">
+                                <Tooltip content="Arrive by time" placement="bottom" placeholder="">
+                                    <li><p className="">🚀 <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></p></li>
+                                </Tooltip>
+
+                                <Tooltip content="1st session time" placement="bottom" placeholder="">
+                                    <li><span className="mr-1">🚥 <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></li>
+                                </Tooltip>
+                            </div>
                         </ul>
                     </div>
 

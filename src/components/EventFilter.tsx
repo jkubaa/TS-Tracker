@@ -44,8 +44,8 @@ export default function EventFilter(props: any) {
     }, [isGridFilterEnabled])
 
     return (
-        <>
-            <div className="flex items-center justify-center mt-5">
+        <div className="grid grid-col text-white rounded-lg mb-4">
+            <div className="flex items-center justify-center">
                 <label htmlFor="public" className="mt-px mb-0 mx-4 font-semibold text-white cursor-pointer select-none">
                     Public
                 </label>
@@ -66,21 +66,20 @@ export default function EventFilter(props: any) {
                 </label>
             </div>
 
-            <div className="flex flex-col my-5 md:flex-row justify-center items-center">
-                <div className="px-2 w-72 mb-4 md:mb-0">
+            <div className="flex flex-col mt-5 lg:flex-row justify-center items-center">
+                <div className="px-2 w-72 mb-4 lg:mb-0">
                     <Popover placement="bottom" animate={{ mount: { y: 0 }, unmount: { y: 15 } }}>
                         <PopoverHandler>
                             <Input
-                                label="Date"
-                                color="red"
-                                className="text-white cursor-pointer"
+                                label="Date"      
+                                className="cursor-pointer"
                                 onChange={() => null}
                                 value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGb })] : []}
                                 crossOrigin=""
                                 onFocus={(e) => e.target.readOnly = true}
                             />
                         </PopoverHandler>
-                        <PopoverContent className="bg-gray-800 border-0" placeholder="">
+                        <PopoverContent className="bg-gray-900 border-2 border-red-500" placeholder="">
                             <DayPicker
                                 mode="single"
                                 required
@@ -122,8 +121,8 @@ export default function EventFilter(props: any) {
                     </Popover>
                 </div>
 
-                {!isGridFilterEnabled && <div className="w-72 px-2 mb-4 md:mb-0">
-                    <Select placeholder="" label="Event" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="666353" onChange={(val) => props.setProductId(val)}>
+                {!isGridFilterEnabled && <div className="w-72 px-2 mb-4 lg:mb-0">
+                    <Select placeholder="" label="Event" value="666353" onChange={(val) => props.setProductId(val)}>
                         <Option value="666353">Adult Ultimate Race Experience</Option>
                         <Option value="22087459">Adult Combat Karts</Option>
                         <Option value="104013">Three4Two</Option>
@@ -132,8 +131,8 @@ export default function EventFilter(props: any) {
                     </Select>
                 </div>}
 
-                {isGridFilterEnabled && <div className="w-72 px-2 mb-4 md:mb-0">
-                    <Select placeholder="" label="Event" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} className="rounded-lg text-white" color="red" value="7801970" onChange={(val) => props.setProductId(val)}>
+                {isGridFilterEnabled && <div className="w-72 px-2 mb-4 lg:mb-0">
+                    <Select placeholder="" label="Event" value="7801970" onChange={(val) => props.setProductId(val)}>
                         <Option value="7801970">#GRID 342 - SOCIAL+</Option>
                         <Option value="33404672">#GRID Series - CLUB+</Option>
                         <Option value="5013415">#GRID Tin Tops - CLUB+</Option>
@@ -141,11 +140,11 @@ export default function EventFilter(props: any) {
                 </div>}
 
                 <div className="w-72 px-2">
-                    <Select placeholder="" label="Track" animate={{ mount: { y: 0 }, unmount: { y: 15 } }} value="Newcastle" className="rounded-lg text-white" color="red" onChange={() => null}>
+                    <Select placeholder="" label="Track" value="Newcastle" onChange={() => null}>
                         <Option value="Newcastle">Newcastle</Option>
                     </Select>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

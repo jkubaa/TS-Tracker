@@ -73,8 +73,6 @@ export default function EventsList(props: any) {
 
     return (
         <>
-            <h1 className="text-white text-center text-2xl font-semibold mt-3">Go Karting Events List</h1>
-
             <EventFilter startDate={startDate} setStartDate={setStartDate} setProductId={setProductId} />
 
             {isLoading && <div className="flex justify-center my-10">
