@@ -121,6 +121,12 @@ export default function EventFilter(props: any) {
                     </Popover>
                 </div>
 
+                <div className="w-72 px-2">
+                    <Select placeholder="" label="Track" value="Newcastle" onChange={() => null}>
+                        <Option value="Newcastle">Newcastle</Option>
+                    </Select>
+                </div>
+
                 {!isGridFilterEnabled && <div className="w-72 px-2 mb-4 lg:mb-0">
                     <Select placeholder="" label="Event" value="666353" onChange={(val) => props.setProductId(val)}>
                         <Option value="666353">Adult Ultimate Race Experience</Option>
@@ -139,11 +145,6 @@ export default function EventFilter(props: any) {
                     </Select>
                 </div>}
 
-                <div className="w-72 px-2">
-                    <Select placeholder="" label="Track" value="Newcastle" onChange={() => null}>
-                        <Option value="Newcastle">Newcastle</Option>
-                    </Select>
-                </div>
             </div>
         </div>
     )
