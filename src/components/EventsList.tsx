@@ -59,6 +59,7 @@ export default function EventsList(props: any) {
 
     const noResults = (eventEntries?.length == 0) && !isLoading
 
+    /* Disabled for now as it may need to be reworked or removed
     const goToPreviousDay = () => {
         const previousDate = new Date(startDate)
         previousDate.setDate(previousDate.getDate() - 1)
@@ -70,6 +71,13 @@ export default function EventsList(props: any) {
         nextDate.setDate(nextDate.getDate() + 1)
         setStartDate(nextDate)
     }
+    
+    Return html
+    <div className="flex flex-col sm:flex-row justify-between my-5">
+        <Button variant="outlined" className="hover:bg-red-900/25  border-red-500 text-white font-bold py-2 px-4 rounded mx-5 mb-3 w-44" onClick={goToPreviousDay} placeholder="">Search previous day</Button>
+        <Button variant="outlined" className="hover:bg-red-900/25  border-red-500 text-white font-bold py-2 px-4 rounded mx-5 mb-3 w-44" onClick={goToNextDay} placeholder="">Search next day</Button>
+    </div>
+    */
 
     return (
         <>
@@ -81,11 +89,6 @@ export default function EventsList(props: any) {
 
             {noResults && <div className="flex flex-col items-center">
             <p className="text-center text-lg font-semibold text-white mt-8">No events found or events are all at capacity. Please try a different date or event.</p>
-
-            <div className="flex flex-col sm:flex-row justify-between my-5">
-                <Button variant="outlined" className="hover:bg-red-900/25  border-red-500 text-white font-bold py-2 px-4 rounded mx-5 mb-3 w-44" onClick={goToPreviousDay} placeholder="">Search previous day</Button>
-                <Button variant="outlined" className="hover:bg-red-900/25  border-red-500 text-white font-bold py-2 px-4 rounded mx-5 mb-3 w-44" onClick={goToNextDay} placeholder="">Search next day</Button>
-            </div>
             </div>}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
