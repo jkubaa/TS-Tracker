@@ -1,7 +1,7 @@
 import { useState } from "react"
 import useSWR from "swr"
 import axios from "axios"
-import { Spinner, Button } from "@material-tailwind/react"
+import { Spinner } from "@material-tailwind/react"
 
 // Components
 import EventEntry from "./EventEntry"
