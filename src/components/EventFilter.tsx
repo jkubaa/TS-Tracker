@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 // Date Picker imports
 import { Input, Popover, PopoverHandler, PopoverContent, Select, Option } from "@material-tailwind/react"
@@ -7,7 +7,18 @@ import enGb from 'date-fns/locale/en-GB'
 import { DayPicker } from "react-day-picker"
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
 
-export default function EventFilter(props: any) {
+interface EventFilterProps {
+    startDate: Date
+    setStartDate: Function
+    locationsLoading: boolean
+    locationEntries: JSX.Element[] | undefined
+    selectedLocation: string
+    setSelectedLocation: Function
+    setProductId: Function
+    locationEventsLoading: boolean
+    eventEntries: JSX.Element[] | undefined
+}
+export default function EventFilter({startDate, setStartDate, locationsLoading, locationEntries, selectedLocation, setSelectedLocation, setProductId, locationEventsLoading, eventEntries}: EventFilterProps) {
     const [isGridFilterEnabled, setIsGridEnabled] = useState(false)
 
     // Calendar functions
@@ -35,13 +46,13 @@ export default function EventFilter(props: any) {
         setIsGridEnabled(event.target.checked)
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (isGridFilterEnabled) {
-            props.setProductId("7801970")
+            setProductId("7801970")
         } else {
-            props.setProductId("666353")
+            setProductId("666353")
         }
-    }, [isGridFilterEnabled])
+    }, [isGridFilterEnabled])*/
 
     return (
         <div className="grid grid-col text-white rounded-lg mb-4">
@@ -74,7 +85,7 @@ export default function EventFilter(props: any) {
                                 label="Date"      
                                 className="cursor-pointer"
                                 onChange={() => null}
-                                value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGb })] : []}
+                                value={startDate ? [format(startDate, "PPPP", { locale: enGb })] : []}
                                 crossOrigin=""
                                 onFocus={(e) => e.target.readOnly = true}
                             />
@@ -84,8 +95,8 @@ export default function EventFilter(props: any) {
                                 mode="single"
                                 required
                                 disabled={disabledDays}
-                                selected={props.startDate}
-                                onSelect={props.setStartDate}
+                                selected={startDate}
+                                onSelect={(newStartDate) => setStartDate(newStartDate)}
                                 showOutsideDays
                                 className="border-0"
                                 classNames={{
@@ -121,27 +132,21 @@ export default function EventFilter(props: any) {
                     </Popover>
                 </div>
 
-                <div className="w-72 px-2">
-                    <Select placeholder="" label="Track" value="Newcastle" onChange={() => null}>
-                        <Option value="Newcastle">Newcastle</Option>
+                {!locationsLoading && <div className="w-72 px-2">
+                    <Select label="Track" onChange={(val) => setSelectedLocation(val)} placeholder="">
+                        {locationEntries}
                     </Select>
-                </div>
+                </div>}
 
-                {!isGridFilterEnabled && <div className="w-72 px-2 mb-4 lg:mb-0">
-                    <Select placeholder="" label="Event" value="666353" onChange={(val) => props.setProductId(val)}>
-                        <Option value="666353">Adult Ultimate Race Experience</Option>
-                        <Option value="22087459">Adult Combat Karts</Option>
-                        <Option value="104013">Three4Two</Option>
-                        <Option value="104476">Student, NHS & Forces Karting</Option>
-                        <Option value="103969">50 Lap Race</Option>
+                {eventEntries && <div className="w-72 px-2 mb-4 lg:mb-0">
+                    <Select label="Event" value="" onChange={(val) => setProductId(val)} placeholder="">
+                        {eventEntries}
                     </Select>
                 </div>}
 
                 {isGridFilterEnabled && <div className="w-72 px-2 mb-4 lg:mb-0">
-                    <Select placeholder="" label="Event" value="7801970" onChange={(val) => props.setProductId(val)}>
-                        <Option value="7801970">#GRID 342 - SOCIAL+</Option>
-                        <Option value="33404672">#GRID Series - CLUB+</Option>
-                        <Option value="5013415">#GRID Tin Tops - CLUB+</Option>
+                    <Select placeholder="" label="Event" onChange={(val) => setProductId(val)}>
+                        <Option value="">Placeholder</Option>
                     </Select>
                 </div>}
 

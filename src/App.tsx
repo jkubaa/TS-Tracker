@@ -41,7 +41,6 @@ function App() {
       }
     },
 
-
     input: {
       defaultProps: {
         color: "red",
