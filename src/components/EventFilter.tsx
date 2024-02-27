@@ -21,6 +21,9 @@ interface EventFilterProps {
 export default function EventFilter({startDate, setStartDate, locationsLoading, locationEntries, selectedLocation, setSelectedLocation, setProductId, locationEventsLoading, eventEntries}: EventFilterProps) {
     const [isGridFilterEnabled, setIsGridEnabled] = useState(false)
 
+    // TEMPORARY 
+    console.log(selectedLocation, locationEventsLoading)
+
     // Calendar functions
     const isToday = (date: Date) => {
         const today = new Date();
@@ -45,14 +48,6 @@ export default function EventFilter({startDate, setStartDate, locationsLoading, 
     const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsGridEnabled(event.target.checked)
     }
-
-    /*useEffect(() => {
-        if (isGridFilterEnabled) {
-            setProductId("7801970")
-        } else {
-            setProductId("666353")
-        }
-    }, [isGridFilterEnabled])*/
 
     return (
         <div className="grid grid-col text-white rounded-lg mb-4">

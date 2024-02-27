@@ -80,7 +80,7 @@ export default function EventsList(props: any) {
     const { data: fetchedActivities, isLoading: fetchedActivitiesLoading } =
         useSWR<Array<LocationEventsResponse> | undefined>((() => selectedLocation && locationBaseAddress ? locationEventsUrl : false), locationActivitiesFetcher, { revalidateOnFocus: false })
 
-    function filterEventOptions(name: string, eventKind: string): boolean {
+    function filterEventOptions(_name: string, eventKind: string): boolean {
         if (eventKind === "Race") {
             return true
         } else {
