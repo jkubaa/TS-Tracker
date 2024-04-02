@@ -25,7 +25,8 @@ export default function EventsList(props: any) {
     const [productId, setProductId] = useState("666353")
     const apiKey = FetchAccessToken()
 
-    const eventsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + startDate.toISOString() + "&productId=" + productId
+    // TEMPORARY: Set the date to the next day, will need to fix the calendar as it currently selects the day before
+    const eventsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + new Date(startDate.getTime() + 24 * 60 * 60 * 1000).toISOString() + "&productId=" + productId
 
     const tsApiBody = {
         "dynamicLines": null,

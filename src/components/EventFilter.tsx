@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 // Date Picker imports
 import { Input, Popover, PopoverHandler, PopoverContent, Select, Option } from "@material-tailwind/react"
 import { format } from "date-fns"
-import enGb from 'date-fns/locale/en-GB'
+import { enGB } from 'date-fns/locale'
 import { DayPicker } from "react-day-picker"
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
 
@@ -74,7 +74,7 @@ export default function EventFilter(props: any) {
                                 label="Date"      
                                 className="cursor-pointer"
                                 onChange={() => null}
-                                value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGb })] : []}
+                                value={props.startDate ? [format(props.startDate, "PPPP", { locale: enGB })] : []}
                                 crossOrigin=""
                                 onFocus={(e) => e.target.readOnly = true}
                             />
@@ -83,6 +83,7 @@ export default function EventFilter(props: any) {
                             <DayPicker
                                 mode="single"
                                 required
+                                locale={enGB}
                                 disabled={disabledDays}
                                 selected={props.startDate}
                                 onSelect={props.setStartDate}
