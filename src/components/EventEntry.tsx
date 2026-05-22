@@ -47,7 +47,7 @@ export default function EventEntry(props: any) {
                         <h2 className="text-lg font-semibold mt-2">{props.eventName}</h2>
                         <ul className="list-none text-sm text-center leading-tight py-1 ">
                             <Tooltip content="Venue" placement="right" placeholder="">
-                                <li><p className="my-2">📍 <span className="font-semibold">Newcastle</span></p></li>
+                                <li><p className="my-2">📍 <span className="font-semibold">{props.eventLocation}</span></p></li>
                             </Tooltip>
 
                             <Tooltip content="Date" placement="right" placeholder="">
@@ -86,7 +86,7 @@ export default function EventEntry(props: any) {
                                 <h2 className="text-2xl font-semibold mt-2">{props.eventName}</h2>
                                 <ul className="list-none text-lg text-left leading-tight py-1">
                                     <li><p className="my-2">📅 Date: <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
-                                    <li><p className="my-2">📍 Location: <span className="font-semibold">Newcastle</span></p></li>
+                                    <li><p className="my-2">📍 Location: <span className="font-semibold">{props.eventLocation}</span></p></li>
                                     <li><p className="my-2">🚀 Arrive by: <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></p></li>
                                     <li><span className="mr-1">🚥 1st session time: <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></li>
                                 </ul>

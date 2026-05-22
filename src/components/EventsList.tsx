@@ -44,11 +44,13 @@ export default function EventsList(props: any) {
     const [startDate, setStartDate] = useState(new Date())
     const [selectedLocation, setSelectedLocation] = useState("")
     const [locationBaseAddress, setLocationBaseAddress] = useState("")
+    const [locationEventsUrl, setLocationEventsUrl] = useState("")
 
     useEffect(() => {
         if (selectedLocation) {
             const selectedLocationBaseAddress = locations?.clientsInfo.find((location) => location.clientKey === selectedLocation)?.baseAddress
             setLocationBaseAddress(selectedLocationBaseAddress ?? "")
+            setLocationEventsUrl("https://booking-api" + selectedLocationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + startDate.toISOString())
         }
 
     }, [selectedLocation])
@@ -74,7 +76,7 @@ export default function EventsList(props: any) {
         fetch(url, { headers: { "X-Fast-AccessToken": apiKey ?? "" } })
             .then(response => response.json())
 
-    const locationEventsUrl: string = "https://booking-api" + locationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + startDate.toISOString()
+    //const locationEventsUrl: string = "https://booking-api" + locationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + startDate.toISOString()
     // TO DO: whenever location changes, fetch the new locationBaseAddress
 
     const { data: fetchedActivities, isLoading: fetchedActivitiesLoading } =
@@ -123,7 +125,7 @@ export default function EventsList(props: any) {
         <EventEntry
             productId={productId}
             eventName={proposal.blocks[0].block.name}
-            // Add location to event entry
+            eventLocation={selectedLocation}
             eventDate={proposal.blocks[0].block.start}
             eventCapacity={proposal.blocks[0].block.capacity}
             eventFreeSpots={proposal.blocks[0].block.freeSpots}
