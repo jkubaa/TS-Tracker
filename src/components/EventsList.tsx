@@ -26,7 +26,7 @@ export default function EventsList(props: any) {
     const apiKey = FetchAccessToken()
 
     // TEMPORARY: Set the date to the next day, will need to fix the calendar as it currently selects the day before
-    const eventsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + new Date(startDate.getTime() + 24 * 60 * 60 * 1000).toISOString() + "&productId=" + productId
+    const eventsUrl: string = "https://booking-api4.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + new Date(startDate.getTime() + 24 * 60 * 60 * 1000).toISOString() + "&productId=" + productId
 
     const tsApiBody = {
         "dynamicLines": null,
@@ -102,7 +102,7 @@ export default function EventsList(props: any) {
 }
 
 function FetchAccessToken() {
-    const messageToken: string = "U2FsdGVkX1%2ByoQnYLlCRfDkEihGKenZ3d%2FDMATtpA1hGE4astDf8KJ%2Bzrt63MHII"
+    const messageToken: string = "U2FsdGVkX1%2FQ8g%2FyPIhbrQGzW5F8NNp4PlWeOL%2BlgZ6I5xUuegbKsOW3Il1Bft%2Fg"
     const accessTokenUrl: string = "https://backend.sms-timing.com/api/connectioninfo/encrypted?message=" + messageToken + "&locationType=3&type=booking"
     const fetcher = (url: string) =>
         fetch(url)
