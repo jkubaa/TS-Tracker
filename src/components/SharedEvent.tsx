@@ -20,7 +20,7 @@ export default function SharedEvent(props: any) {
     const productIdParam = queryParams.get("pid")
     const eventDateParam = queryParams.get("date")
 
-    const eventsUrl: string = "https://booking-api18.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + eventDateParam
+    const eventsUrl: string = "https://booking-api4.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + eventDateParam
 
     const bookHref = "https://booking.sms-timing.com/teamsportnewcastle/book/product-list?adults=1&kids=0&productId=" + productIdParam + "&people=1&datetime=" + eventDateParam
 
