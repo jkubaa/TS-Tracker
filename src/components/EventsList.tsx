@@ -7,6 +7,7 @@ import { Spinner, Option } from "@material-tailwind/react"
 import EventEntry from "./EventEntry"
 import EventFilter from "./EventFilter"
 import SharedEvent from "./SharedEvent"
+import dayjs from "dayjs"
 //import PinnedEvents from "./PinnedEvents"
 
 interface LocationEventsResponse {
@@ -50,7 +51,7 @@ export default function EventsList(props: any) {
         if (selectedLocation) {
             const selectedLocationBaseAddress = locations?.clientsInfo.find((location) => location.clientKey === selectedLocation)?.baseAddress
             setLocationBaseAddress(selectedLocationBaseAddress ?? "")
-            setLocationEventsUrl("https://booking-api" + selectedLocationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + startDate.toISOString())
+            setLocationEventsUrl("https://booking-api" + selectedLocationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]"))
         }
 
     }, [selectedLocation])
@@ -76,9 +77,6 @@ export default function EventsList(props: any) {
         fetch(url, { headers: { "X-Fast-AccessToken": apiKey ?? "" } })
             .then(response => response.json())
 
-    //const locationEventsUrl: string = "https://booking-api" + locationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + startDate.toISOString()
-    // TO DO: whenever location changes, fetch the new locationBaseAddress
-
     const { data: fetchedActivities, isLoading: fetchedActivitiesLoading } =
         useSWR<Array<LocationEventsResponse> | undefined>((() => selectedLocation && locationBaseAddress ? locationEventsUrl : false), locationActivitiesFetcher, { revalidateOnFocus: false })
 
@@ -102,7 +100,7 @@ export default function EventsList(props: any) {
 
     // Fetch events from API
     const [productId, setProductId] = useState<string>("")
-    const eventsUrl: string = "https://booking-api" + locationBaseAddress + ".sms-timing.com/api/dayplanner/dayplannerauto/" + selectedLocation + "?date=" + startDate.toISOString() + "&productId=" + productId
+    const eventsUrl: string = "https://booking-api" + locationBaseAddress + ".sms-timing.com/api/dayplanner/dayplannerauto/" + selectedLocation + "?date=" + dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]") + "&productId=" + productId
     const tsApiBody = {
         "dynamicLines": null,
         "pageid": "660754",
@@ -121,11 +119,13 @@ export default function EventsList(props: any) {
 
     const { data, isLoading } = useSWR<EventsResponse>(() => apiKey && locationBaseAddress && selectedLocation && productId ? eventsUrl : false, eventsFetcher)
 
+
     const eventEntries = data?.proposals.map((proposal, index) => (
         <EventEntry
             productId={productId}
             eventName={proposal.blocks[0].block.name}
             eventLocation={selectedLocation}
+            eventLocationName={locations?.clientsInfo.find((location) => location.clientKey === selectedLocation)?.name ?? ""}
             eventDate={proposal.blocks[0].block.start}
             eventCapacity={proposal.blocks[0].block.capacity}
             eventFreeSpots={proposal.blocks[0].block.freeSpots}
