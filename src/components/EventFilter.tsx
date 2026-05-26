@@ -3,8 +3,8 @@ import React, { useState } from "react"
 // Date Picker imports
 import { Input, Popover, PopoverHandler, PopoverContent, Select, Option } from "@material-tailwind/react"
 import { format } from "date-fns"
-import enGb from 'date-fns/locale/en-GB'
 import { DayPicker } from "react-day-picker"
+import { enGB } from "date-fns/locale"
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
 
 interface EventFilterProps {
@@ -18,11 +18,8 @@ interface EventFilterProps {
     locationEventsLoading: boolean
     eventEntries: JSX.Element[] | undefined
 }
-export default function EventFilter({startDate, setStartDate, locationsLoading, locationEntries, selectedLocation, setSelectedLocation, setProductId, locationEventsLoading, eventEntries}: EventFilterProps) {
+export default function EventFilter({ startDate, setStartDate, locationsLoading, locationEntries, selectedLocation, setSelectedLocation, setProductId, eventEntries }: EventFilterProps) {
     const [isGridFilterEnabled, setIsGridEnabled] = useState(false)
-
-    // TEMPORARY 
-    console.log(selectedLocation, locationEventsLoading)
 
     // Calendar functions
     const isToday = (date: Date) => {
@@ -48,6 +45,11 @@ export default function EventFilter({startDate, setStartDate, locationsLoading, 
     const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsGridEnabled(event.target.checked)
     }
+
+    // Reset event selection when location changes
+    React.useEffect(() => {
+        setProductId("")
+    }, [selectedLocation])
 
     return (
         <div className="grid grid-col text-white rounded-lg mb-4">
@@ -77,10 +79,10 @@ export default function EventFilter({startDate, setStartDate, locationsLoading, 
                     <Popover placement="bottom" animate={{ mount: { y: 0 }, unmount: { y: 15 } }}>
                         <PopoverHandler>
                             <Input
-                                label="Date"      
+                                label="Date"
                                 className="cursor-pointer"
                                 onChange={() => null}
-                                value={startDate ? [format(startDate, "PPPP", { locale: enGb })] : []}
+                                value={startDate ? [format(startDate, "PPPP", { locale: enGB })] : []}
                                 crossOrigin=""
                                 onFocus={(e) => e.target.readOnly = true}
                             />
@@ -92,6 +94,8 @@ export default function EventFilter({startDate, setStartDate, locationsLoading, 
                                 disabled={disabledDays}
                                 selected={startDate}
                                 onSelect={(newStartDate) => setStartDate(newStartDate)}
+                                aria-label="Select date"
+                                aria-hidden={false}
                                 showOutsideDays
                                 className="border-0"
                                 classNames={{
@@ -127,21 +131,21 @@ export default function EventFilter({startDate, setStartDate, locationsLoading, 
                     </Popover>
                 </div>
 
-                {!locationsLoading && <div className="w-72 px-2">
+                {!locationsLoading && <div className="w-72 px-2 mb-4 lg:mb-0">
                     <Select label="Track" onChange={(val) => setSelectedLocation(val)} placeholder="">
                         {locationEntries}
                     </Select>
                 </div>}
 
-                {eventEntries && <div className="w-72 px-2 mb-4 lg:mb-0">
+                {!isGridFilterEnabled && eventEntries && <div className="w-72 px-2 mb-4 lg:mb-0">
                     <Select label="Event" value="" onChange={(val) => setProductId(val)} placeholder="">
                         {eventEntries}
                     </Select>
                 </div>}
 
                 {isGridFilterEnabled && <div className="w-72 px-2 mb-4 lg:mb-0">
-                    <Select placeholder="" label="Event" onChange={(val) => setProductId(val)}>
-                        <Option value="">Placeholder</Option>
+                    <Select label="Event" value="" onChange={(val) => setProductId(val)} placeholder="">
+                        <Option value="">Coming Soon!</Option>
                     </Select>
                 </div>}
 

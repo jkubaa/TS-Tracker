@@ -18,11 +18,13 @@ export default function SharedEvent(props: any) {
 
     const queryParams = new URLSearchParams(window.location.search)
     const productIdParam = queryParams.get("pid")
+    const locationParam = queryParams.get("location")
+    const locationNameParam = queryParams.get("locationName")
     const eventDateParam = queryParams.get("date")
 
-    const eventsUrl: string = "https://booking-api4.sms-timing.com/api/dayplanner/dayplannerauto/teamsportnewcastle?date=" + eventDateParam
+    const eventsUrl: string = "https://booking-api6.sms-timing.com/api/dayplanner/dayplannerauto/" + locationParam + "?date=" + eventDateParam
 
-    const bookHref = "https://booking.sms-timing.com/teamsportnewcastle/book/product-list?adults=1&kids=0&productId=" + productIdParam + "&people=1&datetime=" + eventDateParam
+    const bookHref = "https://booking.sms-timing.com/" + locationParam + "/book/product-list?adults=1&kids=0&productId=" + productIdParam + "&people=1&datetime=" + eventDateParam
 
     const tsApiBody = {
         "dynamicLines": null,
@@ -56,6 +58,8 @@ export default function SharedEvent(props: any) {
             <SharedEventEntry
                 eventName={proposal.blocks[0].block.name}
                 eventDate={proposal.blocks[0].block.start}
+                eventLocation={locationParam}
+                eventLocationName={locationNameParam}
                 eventCapacity={proposal.blocks[0].block.capacity}
                 eventFreeSpots={proposal.blocks[0].block.freeSpots}
                 key={index}
@@ -91,7 +95,7 @@ export default function SharedEvent(props: any) {
                 setClearUrl(true)
             }}
             size="md"
-            className="bg-gray-800"
+            className="bg-gray-800 overflow-auto"
             placeholder="">
 
             <DialogHeader className="text-white" placeholder="">A TeamSport event has been shared with you!</DialogHeader>

@@ -16,7 +16,8 @@ export default function EventEntry(props: any) {
 
     const arrivalTime = new Date(dateTime.getTime() - 40 * 60000);
 
-    const bookHref = "https://booking.sms-timing.com/teamsportnewcastle/book/product-list?adults=1&kids=0&productId=" + props.productId + "&people=1&datetime=" + dateTime.toISOString()
+    const bookHref = "https://booking.sms-timing.com/" + props.eventLocation + "/book/product-list?adults=1&kids=0&productId=" + props.productId + "&people=1&datetime=" + dateTime.toISOString()
+
 
     if (value) {
         // Do nothing
@@ -29,14 +30,14 @@ export default function EventEntry(props: any) {
                     <Tooltip content={copied ? "Copied!" : "Copy share link"} placement="top" placeholder="">
                         <IconButton
                             onClick={() => {
-                                copy("https://tstracker.pages.dev/shared/?pid=" + props.productId + "&date=" + props.eventDate)
-                                setCopied(true);
+                                copy(window.location.origin + "/shared/?pid=" + props.productId + "&location=" + props.eventLocation + "&locationName=" + props.eventLocationFullname + "&date=" + props.eventDate)
+                                setCopied(true)
                             }}
                             className="rounded-full"
                             placeholder=""
                         >
-                            {copied ? (<CheckIcon className="h-5 w-5 text-white" />)
-                                : (<DocumentDuplicateIcon className="h-5 w-5 text-white" />)
+                            {copied ? (<CheckIcon className="h-5 w-5 text-white" aria-hidden="false" aria-label="Copied" />)
+                                : (<DocumentDuplicateIcon className="h-5 w-5 text-white" aria-hidden="false" aria-label="Copy share link" />)
                             }
                         </IconButton>
                     </Tooltip>
@@ -47,7 +48,7 @@ export default function EventEntry(props: any) {
                         <h2 className="text-lg font-semibold mt-2">{props.eventName}</h2>
                         <ul className="list-none text-sm text-center leading-tight py-1 ">
                             <Tooltip content="Venue" placement="right" placeholder="">
-                                <li><p className="my-2">📍 <span className="font-semibold">{props.eventLocation}</span></p></li>
+                                <li><p className="my-2">📍 <span className="font-semibold">{props.eventLocationName}</span></p></li>
                             </Tooltip>
 
                             <Tooltip content="Date" placement="right" placeholder="">
@@ -77,7 +78,7 @@ export default function EventEntry(props: any) {
                 </div>
             </section>
 
-            <Dialog open={open} handler={handleOpen} size="md" className="bg-gray-800" placeholder="">
+            <Dialog open={open} handler={handleOpen} size="md" className="bg-gray-800 overflow-auto" placeholder="">
                 <DialogHeader className="text-white" placeholder="">You will be redirected to TeamSport to complete your booking</DialogHeader>
                 <DialogBody className="text-white" placeholder="">
                     <section className="grid grid-cols-1 md:grid-cols-2 text-white text-center mx-3">
@@ -86,7 +87,7 @@ export default function EventEntry(props: any) {
                                 <h2 className="text-2xl font-semibold mt-2">{props.eventName}</h2>
                                 <ul className="list-none text-lg text-left leading-tight py-1">
                                     <li><p className="my-2">📅 Date: <span className="font-semibold">{dateTime.toLocaleDateString()}</span></p></li>
-                                    <li><p className="my-2">📍 Location: <span className="font-semibold">{props.eventLocation}</span></p></li>
+                                    <li><p className="my-2">📍 Location: <span className="font-semibold">{props.eventLocationName}</span></p></li>
                                     <li><p className="my-2">🚀 Arrive by: <span className="font-semibold">{arrivalTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></p></li>
                                     <li><span className="mr-1">🚥 1st session time: <span className="font-semibold">{dateTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: props.is12h })}</span></span></li>
                                 </ul>
