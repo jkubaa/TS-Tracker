@@ -19,7 +19,6 @@ export default function EventEntry(props: any) {
 
     const bookHref = `https://booking.sms-timing.com/${props.eventLocation}/book/product-list?adults=1&kids=0&productId=${props.productId}&people=1&datetime=${dayjs(dateTime).format("YYYY-MM-DDTHH:mm:ss[Z]")}`;
 
-
     if (value) {
         // Do nothing
     }
@@ -31,7 +30,7 @@ export default function EventEntry(props: any) {
                     <Tooltip content={copied ? "Copied!" : "Copy share link"} placement="top" placeholder="">
                         <IconButton
                             onClick={() => {
-                                copy(window.location.origin + "/shared/?pid=" + props.productId + "&location=" + props.eventLocation + "&locationName=" + props.eventLocationFullname + "&date=" + props.eventDate)
+                                copy(window.location.origin + "/shared/?pid=" + props.productId + "&location=" + props.eventLocation + "&locationName=" + props.eventLocationName + "&date=" + props.eventDate)
                                 setCopied(true)
                             }}
                             className="rounded-full"
@@ -79,7 +78,7 @@ export default function EventEntry(props: any) {
                 </div>
             </section>
 
-            <Dialog open={open} handler={handleOpen} size="md" className="bg-gray-800 overflow-auto" placeholder="">
+            <Dialog open={open} handler={handleOpen} size="md" className="bg-gray-800 dialog" placeholder="">
                 <DialogHeader className="text-white" placeholder="">You will be redirected to TeamSport to complete your booking</DialogHeader>
                 <DialogBody className="text-white" placeholder="">
                     <section className="grid grid-cols-1 md:grid-cols-2 text-white text-center mx-3">

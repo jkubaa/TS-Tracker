@@ -47,15 +47,6 @@ export default function EventsList(props: any) {
     const [locationBaseAddress, setLocationBaseAddress] = useState("")
     const [locationEventsUrl, setLocationEventsUrl] = useState("")
 
-    useEffect(() => {
-        if (selectedLocation) {
-            const selectedLocationBaseAddress = locations?.clientsInfo.find((location) => location.clientKey === selectedLocation)?.baseAddress
-            setLocationBaseAddress(selectedLocationBaseAddress ?? "")
-            setLocationEventsUrl(`https://booking-api${selectedLocationBaseAddress}.sms-timing.com/api/page/${selectedLocation}?date=${dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]")}`)
-        }
-
-    }, [selectedLocation])
-
     // Fetch locations from API
     const locationsUrl: string = `https://backend.sms-timing.com/api/cluster/clusterinfo/teamsportnewcastle`
 
@@ -68,6 +59,15 @@ export default function EventsList(props: any) {
     const locationEntries = locations?.clientsInfo.map((location) => (
         <Option key={location.clientKey} value={location.clientKey}>{location.name}</Option>
     ))
+
+    // Fetch location base address when selected location changes
+    useEffect(() => {
+        if (selectedLocation) {
+            const selectedLocationBaseAddress = locations?.clientsInfo.find((location) => location.clientKey === selectedLocation)?.baseAddress
+            setLocationBaseAddress(selectedLocationBaseAddress ?? "")
+            setLocationEventsUrl(`https://booking-api${selectedLocationBaseAddress}.sms-timing.com/api/page/${selectedLocation}?date=${dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]")}`)
+        }
+    }, [selectedLocation])
 
     // Fetch the access token to allow further querying of the API 
     const apiKey = FetchAccessToken()
@@ -118,7 +118,6 @@ export default function EventsList(props: any) {
             .then(response => response.data)
 
     const { data, isLoading } = useSWR<EventsResponse>(() => apiKey && locationBaseAddress && selectedLocation && productId ? eventsUrl : false, eventsFetcher)
-
 
     const eventEntries = data?.proposals.map((proposal, index) => (
         <EventEntry

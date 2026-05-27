@@ -15,6 +15,7 @@ export default function SharedEvent(props: any) {
     const [productId, setProductId] = useState("666353")
     const [eventExists, setEventExists] = useState(false)
     const [clearUrl, setClearUrl] = useState(false)
+    const [locationBaseAddress, setLocationBaseAddress] = useState("")
 
     const queryParams = new URLSearchParams(window.location.search)
     const productIdParam = queryParams.get("pid")
@@ -22,7 +23,26 @@ export default function SharedEvent(props: any) {
     const locationNameParam = queryParams.get("locationName")
     const eventDateParam = queryParams.get("date")
 
-    const eventsUrl: string = `https://booking-api6.sms-timing.com/api/dayplanner/dayplannerauto/${locationParam}?date=${eventDateParam}`
+    // Fetch location base address from the share link location parameter
+    useEffect(() => {
+        if (locationParam) {
+            const fetchLocationBaseAddress = async () => {
+                try {
+                    const response = await axios.get(`https://backend.sms-timing.com/api/cluster/clusterinfo/teamsportnewcastle`)
+                    const locationData = response.data.clientsInfo.find((location: any) => location.clientKey === locationParam)
+                    if (locationData) {
+                        setLocationBaseAddress(locationData.baseAddress)
+                        console.log("Fetched location base address:", locationData.baseAddress)
+                    }
+                } catch (error) {
+                    console.error("Error fetching location base address:", error)
+                }
+            }
+            fetchLocationBaseAddress()
+        }
+    }, [locationParam])
+
+    const eventsUrl: string = `https://booking-api${locationBaseAddress}.sms-timing.com/api/dayplanner/dayplannerauto/${locationParam}?date=${eventDateParam}`
 
     const bookHref = `https://booking.sms-timing.com/${locationParam}/book/product-list?adults=1&kids=0&productId=${productIdParam}&people=1&datetime=${eventDateParam}`
 
@@ -95,7 +115,7 @@ export default function SharedEvent(props: any) {
                 setClearUrl(true)
             }}
             size="md"
-            className="bg-gray-800 overflow-auto"
+            className="bg-gray-800 dialog"
             placeholder="">
 
             <DialogHeader className="text-white" placeholder="">A TeamSport event has been shared with you!</DialogHeader>
