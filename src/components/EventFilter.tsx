@@ -91,6 +91,7 @@ export default function EventFilter({ startDate, setStartDate, locationsLoading,
                             <DayPicker
                                 mode="single"
                                 required
+                                locale={enGB}
                                 disabled={disabledDays}
                                 selected={startDate}
                                 onSelect={(newStartDate) => setStartDate(newStartDate)}
