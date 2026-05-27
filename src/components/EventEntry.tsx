@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter, Tooltip, IconButton } from "@material-tailwind/react"
 import { useCopyToClipboard } from "usehooks-ts"
 import { CheckIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline"
+import dayjs from "dayjs"
 
 
 export default function EventEntry(props: any) {
@@ -16,7 +17,7 @@ export default function EventEntry(props: any) {
 
     const arrivalTime = new Date(dateTime.getTime() - 40 * 60000);
 
-    const bookHref = "https://booking.sms-timing.com/" + props.eventLocation + "/book/product-list?adults=1&kids=0&productId=" + props.productId + "&people=1&datetime=" + dateTime.toISOString()
+    const bookHref = `https://booking.sms-timing.com/${props.eventLocation}/book/product-list?adults=1&kids=0&productId=${props.productId}&people=1&datetime=${dayjs(dateTime).format("YYYY-MM-DDTHH:mm:ss[Z]")}`;
 
 
     if (value) {

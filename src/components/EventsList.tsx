@@ -51,13 +51,13 @@ export default function EventsList(props: any) {
         if (selectedLocation) {
             const selectedLocationBaseAddress = locations?.clientsInfo.find((location) => location.clientKey === selectedLocation)?.baseAddress
             setLocationBaseAddress(selectedLocationBaseAddress ?? "")
-            setLocationEventsUrl("https://booking-api" + selectedLocationBaseAddress + ".sms-timing.com/api/page/" + selectedLocation + "?date=" + dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]"))
+            setLocationEventsUrl(`https://booking-api${selectedLocationBaseAddress}.sms-timing.com/api/page/${selectedLocation}?date=${dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]")}`)
         }
 
     }, [selectedLocation])
 
     // Fetch locations from API
-    const locationsUrl: string = "https://backend.sms-timing.com/api/cluster/clusterinfo/teamsportnewcastle"
+    const locationsUrl: string = `https://backend.sms-timing.com/api/cluster/clusterinfo/teamsportnewcastle`
 
     const locationsFetcher = (url: string) =>
         fetch(url)
@@ -100,7 +100,7 @@ export default function EventsList(props: any) {
 
     // Fetch events from API
     const [productId, setProductId] = useState<string>("")
-    const eventsUrl: string = "https://booking-api" + locationBaseAddress + ".sms-timing.com/api/dayplanner/dayplannerauto/" + selectedLocation + "?date=" + dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]") + "&productId=" + productId
+    const eventsUrl: string = `https://booking-api${locationBaseAddress}.sms-timing.com/api/dayplanner/dayplannerauto/${selectedLocation}?date=${dayjs(startDate).format("YYYY-MM-DDTHH:mm:ss[Z]")}&productId=${productId}`
     const tsApiBody = {
         "dynamicLines": null,
         "pageid": "660754",
@@ -169,7 +169,7 @@ export default function EventsList(props: any) {
 
 function FetchAccessToken() {
     const messageToken: string = "U2FsdGVkX1%2ByoQnYLlCRfDkEihGKenZ3d%2FDMATtpA1hGE4astDf8KJ%2Bzrt63MHII"
-    const accessTokenUrl: string = "https://backend.sms-timing.com/api/connectioninfo/encrypted?message=" + messageToken + "&locationType=3&type=booking"
+    const accessTokenUrl: string = `https://backend.sms-timing.com/api/connectioninfo/encrypted?message=${messageToken}&locationType=3&type=booking`
     const fetcher = (url: string) =>
         fetch(url)
             .then(response => response.json())
